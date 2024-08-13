@@ -12,4 +12,7 @@ data:
   LOANS_APPLICATION_NAME: loans
   CARDS_APPLICATION_NAME: cards
   GATEWAY_APPLICATION_NAME: gatewayserver
+  openTelemetryJavaAgent: "-javaagent:/app/libs/opentelemetry-javaagent-1.32.0.jar"
+  otelExporterEndPoint: http://tempo-grafana-tempo-distributor:4317
+  otelMetricsExporter: none
 

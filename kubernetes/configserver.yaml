@@ -26,7 +26,7 @@ spec:
       # - Each init container must complete successfully before the next one starts.
       containers:
       - name: configserver
-        image: jinsa05/configserver:0.0.1-SNAPSHOT
+        image: jinsa05/configserver:v4
         resources:
           requests:
             cpu: 200m

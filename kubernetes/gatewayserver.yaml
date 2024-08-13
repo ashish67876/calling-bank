@@ -26,7 +26,7 @@ spec:
       # - Each init container must complete successfully before the next one starts.
       containers:
       - name: gatewayserver
-        image: jinsa05/gatewayserver:0.0.1-SNAPSHOT
+        image: jinsa05/gatewayserver:v4
         resources:
           requests:
             cpu: 200m

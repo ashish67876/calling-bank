@@ -26,7 +26,7 @@ spec:
       # - Each init container must complete successfully before the next one starts.
       containers:
       - name: cards
-        image: jinsa05/cards:0.0.1-SNAPSHOT
+        image: jinsa05/cards:v4
         resources:
           requests:
             cpu: 200m
