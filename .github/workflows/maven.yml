@@ -61,6 +61,50 @@ jobs:
       run: |
         cd configserver
         mvn clean install
+  loans:
+    runs-on: ubuntu-latest
 
+    steps:
+    - uses: actions/checkout@v4
+    - name: loans
+      uses: actions/setup-java@v4
+      with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+    - name: building maven for loans
+      run: |
+        cd loans
+        mvn clean install
+  gatewayserver:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: gatewayserver
+      uses: actions/setup-java@v4
+      with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+    - name: building maven for gatewayserver
+      run: |
+        cd gatewayserver
+        mvn clean install
+  eurekaserver:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: eurekaserver
+      uses: actions/setup-java@v4
+      with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+    - name: building maven for eurekaserver
+      run: |
+        cd eurekaserver
+        mvn clean install
 
 
