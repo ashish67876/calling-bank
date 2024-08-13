@@ -15,7 +15,7 @@ on:
     branches: ["main"]
 
 jobs:
-  build:
+  accounts:
 
     runs-on: ubuntu-latest
 
@@ -31,5 +31,36 @@ jobs:
       run: |
         cd accounts
         mvn clean install
+  cards:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: cards
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: building maven for cards
+      run: |
+        cd cards
+        mvn clean install
+  configserver:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: configserver
+      uses: actions/setup-java@v4
+      with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+    - name: building maven for configserver
+      run: |
+        cd configserver
+        mvn clean install
+
 
 
