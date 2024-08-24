@@ -166,7 +166,7 @@ spec:
 # need to replace the placeholders eksinsights and ap-south-1
 apiVersion: v1
 data:
-  cluster.name: calling-app
+  cluster.name: ashish
   logs.region: ap-south-1
 kind: ConfigMap
 metadata:
