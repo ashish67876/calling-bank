@@ -1,33 +1,41 @@
-// vars/checkoutCode.groovy
-
-def call(Map config = [:]) {
-    // Ensure mandatory configuration is provided
-    def repoUrl = config.repoUrl ?: error("Repository URL is required")
-    def branch = config.branch ?: 'main'  // Default to 'main' branch if not specified
-    def credentialsId = config.credentialsId ?: ''  // Optional credentials for private repos
-
+/**
+ * Checkout code from the specified repository
+ *
+ * @param repoUrl (String) - The Git repository URL
+ * @param branch (String) - The branch to checkout (default: 'main')
+ * @param credentialsId (String) - Jenkins credentials ID for authentication (optional)
+ * @param shallowClone (boolean) - Whether to perform a shallow clone (default: true)
+ * @return (boolean) - True if the checkout is successful
+ */
+def call(Map params = [:]) {
+    def repoUrl = params.get('repoUrl', '')
+    def branch = params.get('branch', 'main')
+    def credentialsId = params.get('credentialsId', '')
+    def shallowClone = params.get('shallowClone', true)
+    
+    if (!repoUrl) {
+        error "Repository URL ('repoUrl') is required for checkout"
+    }
+    
     try {
-        echo "Checking out code from ${repoUrl} on branch ${branch}..."
-
-        retry(3) {
-            checkout([
-                $class: 'GitSCM',
-                branches: [[name: "*/${branch}"]],
-                doGenerateSubmoduleConfigurations: false,
-                extensions: [
-                    // Optionally use shallow clone to improve performance
-                    [$class: 'CloneOption', depth: config.depth ?: 1, noTags: false, shallow: true]
-                ],
-                userRemoteConfigs: [[
-                    url: repoUrl,
-                    credentialsId: credentialsId  // Use credentials if provided
-                ]]
-            ])
-        }
+        echo "Checking out code from ${repoUrl} on branch ${branch}"
         
-        echo "Code checkout completed successfully."
-
+        def scmConfig = [
+            $class: 'GitSCM',
+            branches: [[name: "*/${branch}"]],
+            userRemoteConfigs: [[
+                url: repoUrl,
+                credentialsId: credentialsId
+            ]],
+            extensions: shallowClone ? [[$class: 'CloneOption', shallow: true, depth: 1]] : []
+        ]
+        
+        checkout(scmConfig)
+        echo "Checkout successful!"
+        return true
     } catch (Exception e) {
-        error "Code checkout failed: ${e.message}"
+        echo "Error during checkout: ${e.message}"
+        currentBuild.result = 'FAILURE'
+        throw e
     }
 }
