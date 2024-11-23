@@ -10,7 +10,7 @@
 def call(Map params = [:]) {
     def repoUrl = params.get('repoUrl', '')
     def branch = params.get('branch', 'main')
-    def credentialsId = params.get('credentialsId', '')
+    #def credentialsId = params.get('credentialsId', '')
     def shallowClone = params.get('shallowClone', true)
     
     if (!repoUrl) {
@@ -25,7 +25,7 @@ def call(Map params = [:]) {
             branches: [[name: "*/${branch}"]],
             userRemoteConfigs: [[
                 url: repoUrl,
-                credentialsId: credentialsId
+                #credentialsId: credentialsId
             ]],
             extensions: shallowClone ? [[$class: 'CloneOption', shallow: true, depth: 1]] : []
         ]
