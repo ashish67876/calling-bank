@@ -1,6 +1,7 @@
 apiVersion: v1
-kind: flightbooking-microservices
+kind: Namespace
 metadata:
   labels:
     istio-injection: enabled
-  name: default
+  name: flightbooking-microservices
+
